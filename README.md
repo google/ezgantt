@@ -4,7 +4,7 @@ View a Google Spreadsheet as a Gantt Chart
 
 ezGantt uses public Google Chart and Google Drive JavaScript APIs, 
 so the same users who can view the Spreadsheet can see the Gantt chart.
-To try it, go to https://ezgantt.appspot.com/#1KgBdDebs6loaC_ZqSbV7nVsCb89l7i3dCC1RsvGb7DQ
+To try it, go to https://ezgantt.appspot.com/#1kYfoEFXW-psZ8AMy0Ne7wRMiM3umNKBs3v9U7nvafXA
 
 To use it yourself, make a copy of the demo sheet and start adding tasks!
 

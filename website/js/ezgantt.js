@@ -22,12 +22,13 @@ authAndLoadPromise(API_KEY, CLIENT_ID, ['drive', 'spreadsheets', 'gantt']).then(
       };
 
       let hash = location.hash.replace('#', '');
-      if (!hash) {
+      if (hash) {
+        document.getElementById('sheet').setAttribute('href', 'https://docs.google.com/spreadsheets/d/' + hash + '/edit');
+        resolve(hash);  
+      } else {
         helpDialog.showModal();
-        reject();
+        // reject(); Never reject, never resolve.
       }
-      document.getElementById('sheet').setAttribute('href', 'https://docs.google.com/spreadsheets/d/' + hash + '/edit');
-      resolve(hash);
     };
     
     if(document.readyState === 'complete') {

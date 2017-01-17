@@ -2,21 +2,24 @@
 
 View a Google Spreadsheet as a Gantt Chart
 
-ezGantt uses public JavaScript and Google Drive APIs, so only users who can view the Spreadsheet can see the Gantt chart.
-To try it, go to https://ezgantt.appspot.com/#TODO
+ezGantt uses public Google Chart and Google Drive JavaScript APIs, 
+so the same users who can view the Spreadsheet can see the Gantt chart.
+To try it, go to https://ezgantt.appspot.com/#1KgBdDebs6loaC_ZqSbV7nVsCb89l7i3dCC1RsvGb7DQ
+
+To use it yourself, make a copy of the demo sheet and start adding tasks!
 
 # Feature Requests
 
-[ ] Public appspot.com version
-[x] Any line item task descripton where the task starts with a '#' is ignored
-[ ] Drive API v3, Sheets API v4
-[ ] Allow both date and depends-on constraints, and choose latest one as a "no earlier than" constraint.
-[ ] Last updated date (and who?)
-[x] Enforce unique ID column
-[x] Easier linking from sheet to chart
-[x] Resources in demo = people
-[x] Easier hash tag
-[ ] new better auth, fetch, promises flow (pledge?)
+- [x] Public ezgantt.appspot.com version
+- [x] Any line item task descripton where the task starts with a '#' is ignored
+- [x] Drive API v3, Sheets API v4
+- [ ] Allow both date and depends-on constraints, and choose latest one as a "no earlier than" constraint.
+- [ ] Last updated date (and who?)
+- [x] Enforce unique ID column
+- [x] Easier linking from sheet to chart
+- [x] Resources in demo = people
+- [x] Easier hash tag
+- [x] new better auth, fetch, promises flow (pledgejs)
 
 # INFO
 
@@ -29,7 +32,8 @@ To try it, go to https://ezgantt.appspot.com/#TODO
 
 # QUOTES
 
-    "I think ezgantt is a great tool for small-medium projects, it's easy to learn (took me minutes to get a good chart) and maintain."
+    "I think ezgantt is a great tool for small-medium projects, 
+    it's easy to learn (took me minutes to get a good chart) and maintain."
 
 # References
 

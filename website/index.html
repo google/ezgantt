@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+  <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+
+  <script src="https://pledgejs.appspot.com/js/pledge.js"></script>
+  <script src="js/ezgantt.js"></script>
+
+  <style>
+    #chart_div {
+      height: 8000px;
+      width: 100%;
+      background-color: #efe;
+    }
+  </style>
+  <title>Easy Gantt Chart (ezGantt)</title>
+</head>
+
+<body>
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header">
+      <div class="mdl-layout__header-row">
+        <span class="mdl-layout-title" id="pageTitle">Easy Gantt Chart</span>
+        <div class="mdl-layout-spacer"></div>
+        <a id="sheet" class="mdl-navigation__link" target="_blank" href="">Edit</a>
+      </div>
+    </header>
+    <main class="mdl-layout__content">
+      <div class="page-content">
+        <div id="chart_div"></div>
+      </div>
+    </main>
+  </div>
+
+  <dialog id="instructions-dialog">
+    <p>View working demo and starter spreadsheet at <a href="https://goo.gl/BbXhuq">goo.gl/BbXhuq</a></p>
+    <ol>
+      <li>Copy the <a target="_blank" href="https://docs.google.com/spreadsheets/d/1ZkDfbfj3G_CONE22ap82dpgnOxQ9L33CQ5K74ZVPzrA/edit#gid=0">spreadsheet</a></li>
+      <li>Edit it, following the rules in the notes.  Especially the date and dependency rules.  And you MUST keep the word 'gantt' in the worksheet name!</li>
+      <li>View your Gantt Chart at https://ezgantt.appspot.com/<strong>#</strong>YOUR_SPREADSHEET_KEY - where the key is in the URL as you are editing the sheet.
+      https://docs.google.com/spreadsheets/d/<strong>[this part is the key]</strong>/edit  Don't forget the "#" hash!  Or just use the "ezGantt" menu in the spreadsheet.</li>
+    </ol>
+    <button id="close-instructions" class="mdl-button mdl-js-button mdl-js-ripple-effect">got it</button>
+  </dialog>
+
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-68216614-2', 'auto');
+    ga('send', 'pageview');
+  </script>
+</body>
+</html>

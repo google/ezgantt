@@ -1,0 +1,36 @@
+# application: ezgantt
+# version: 1
+runtime: python27
+api_version: 1
+threadsafe: true
+
+skip_files:
+- ^(.*/)?#.*#$
+- ^(.*/)?.*~$
+- ^(.*/)?.*\.py[co]$
+- ^(.*/)?.*/RCS/.*$
+- ^(.*/)?\..*$
+- ^(.*/)?\.libsvm$
+- ^(.*/)?\.jar$
+- .*\bIcon\b.*
+- ^(.*/)?.*/old/.*$
+
+handlers:
+- url: /
+  static_files: website/index.html
+  upload: website/index\.html
+  secure: always
+
+- url: /(.*\.html)
+  mime_type: text/html
+  static_files: website/\1
+  upload: website/(.*\.html)
+  secure: always
+
+- url: /js
+  static_dir: website/js
+  secure: always
+
+builtins:
+- appstats: on
+

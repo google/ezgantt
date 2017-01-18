@@ -19,6 +19,7 @@ authAndLoadPromise(API_KEY, CLIENT_ID, ['drive', 'spreadsheets', 'gantt']).then(
         if (helpDialog.open) {
           helpDialog.close();
         }
+        window.location = 'https://ezgantt.appspot.com/#1kYfoEFXW-psZ8AMy0Ne7wRMiM3umNKBs3v9U7nvafXA';
       };
 
       let hash = location.hash.replace('#', '');
@@ -63,16 +64,21 @@ authAndLoadPromise(API_KEY, CLIENT_ID, ['drive', 'spreadsheets', 'gantt']).then(
   let rowData = sheet.data[0].rowData, 
     result = [];
   for (let rowNum = 1; rowNum < rowData.length; rowNum++) {
-    let newRow = {};
-    for (let colNum = 0; colNum < rowData[rowNum].values.length; colNum++) {
+    let newRow = {}, newRowHasData = false;;
+    for (let colNum = 0; rowData[rowNum] && 
+    rowData[rowNum].values && 
+    colNum < rowData[rowNum].values.length; colNum++) {
       let headerName = rowData[0].values[colNum].formattedValue.toLowerCase().replace(/[^a-z0-9]/g, '').trim();
       if(rowData[rowNum].values[colNum] &&
         (typeof rowData[rowNum].values[colNum].formattedValue !== "undefined")) {
         // Leave empty values missing, everything else is a string.
         newRow[headerName] = '' + rowData[rowNum].values[colNum].formattedValue;
+        newRowHasData=true;
       }
     }
-    result.push(newRow);
+    if(newRowHasData) {
+      result.push(newRow);      
+    }
   }
   return result;
 }).then(function(rows) {
@@ -89,7 +95,9 @@ authAndLoadPromise(API_KEY, CLIENT_ID, ['drive', 'spreadsheets', 'gantt']).then(
   data.addColumn('string', 'Dependencies');
 
   let allRows = [], ids = {};
-  rows.forEach(function (row) {
+  rows.filter(function(row){
+    return row.taskid;
+  }).forEach(function (row) {
     
     let rowData = [];
     // ID

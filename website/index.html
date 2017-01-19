@@ -42,13 +42,15 @@
     <p>View <a target="_blank" href="https://ezgantt.appspot.com/#1kYfoEFXW-psZ8AMy0Ne7wRMiM3umNKBs3v9U7nvafXA">working demo and starter spreadsheet</a>.</p>
     <p>To make your own:</p>
     <ol>
-      <li>Copy the <a target="_blank" href="https://docs.google.com/spreadsheets/d/1kYfoEFXW-psZ8AMy0Ne7wRMiM3umNKBs3v9U7nvafXA/edit#gid=0">spreadsheet</a></li>
-      <li>Edit it, following the rules in the notes - especially the date and dependency rules!  Don't share it with me.  And you MUST keep the word 'gantt' in the worksheet name!</li>
-      <li>View your Gantt Chart at https://ezgantt.appspot.com/<strong>#</strong>YOUR_SPREADSHEET_KEY
-      <i>(where the key is
-      https://docs.google.com/spreadsheets/d/<strong>[this part is the key]</strong>/edit
-      Don't forget the "#" hash!</i>
-      Better still, use the "ezGantt" menu in the spreadsheet.</li>
+      <li>Copy the <a target="_blank" href="https://docs.google.com/spreadsheets/d/1kYfoEFXW-psZ8AMy0Ne7wRMiM3umNKBs3v9U7nvafXA/edit#gid=0">spreadsheet</a>, be sure NOT to share it with me!</li>
+      <li>Edit it, following the rules in the notes - especially the date and dependency rules!
+        <ol>
+          <li>Every Task needs <strong>exactly two</strong> of these fields: a 'Start Date', 'End Date', 'Duration', 'Dependencies'</li>
+          <li>Add a "#" in your TaskName if you want to add rows to your worksheet with "comments" that don't affect the Gantt Chart </li>
+          <li>You MUST keep the word 'gantt' in the worksheet name! Feel free to add more worksheet tabs, but the 'gantt' tab will be used for the Gantt Chart.</li>
+        </ol>
+      </li>
+      <li>View your Gantt Chart with the "ezGantt" menu in the spreadsheet (or at https://ezgantt.appspot.com/<strong>#</strong>YOUR_SPREADSHEET_KEY <i>(where the key is https://docs.google.com/spreadsheets/d/<strong>[this part is the key]</strong>/edit -- Don't forget the "#" hash!)</i> </li>
     </ol>
     <button id="close-instructions" class="mdl-button mdl-js-button mdl-js-ripple-effect">got it</button>
   </dialog>

@@ -1,4 +1,4 @@
-/* globals gapi, google, authAndLoadPromise */
+/* globals gapi, google, authAndLoadPromise, IS_PUBLIC */
 /*jshint esversion: 6 */
 /*jshint unused:true */
 // Override promise.js dialog box.
@@ -6,21 +6,23 @@ window.promiseButtonText = "Authorize VIEW-ONLY access to your Spreadsheets to r
   "This app is stateless and does not store any information.";
 
 const 
-  API_KEY='AIzaSyCyU_k4F1RM-fmoXyhUcEpvTkcWtP40aJA',
-  CLIENT_ID='906125590321-j0kts6f34vu2f70fih84g5c9udm684ok.apps.googleusercontent.com';
+  API_KEY= IS_PUBLIC ? 'AIzaSyCyU_k4F1RM-fmoXyhUcEpvTkcWtP40aJA' : 'AIzaSyAw0yf380IIJSDJeuDhJjWgYIO0ma6ZCbg',
+  CLIENT_ID= IS_PUBLIC ? '906125590321-j0kts6f34vu2f70fih84g5c9udm684ok.apps.googleusercontent.com' : '918743316759-e79mcr3rks3t8291qopi82qb9i8ht5l8.apps.googleusercontent.com'
+  PUBLIC_DOC = '1kYfoEFXW-psZ8AMy0Ne7wRMiM3umNKBs3v9U7nvafXA',
+  PRIVATE_DOC = '1ZkDfbfj3G_CONE22ap82dpgnOxQ9L33CQ5K74ZVPzrA';
+
+if(!IS_PUBLIC) {
+  let anchors = document.getElementsByTagName("a");
+  for (let i = 0; i < anchors.length; i++) {
+      anchors[i].href = anchors[i].href.replace(PUBLIC_DOC, PRIVATE_DOC);
+  }
+}
 
 authAndLoadPromise(API_KEY, CLIENT_ID, ['drive', 'spreadsheets', 'gantt']).then(function () {
   console.log('PLEDGE FINISHED, starting app init.');
   return new Promise(function (resolve, reject) {
     let initFunction = function () {
       let helpDialog = document.getElementById('instructions-dialog');
-
-      document.getElementById('close-instructions').onclick = function () {
-        if (helpDialog.open) {
-          helpDialog.close();
-        }
-        window.location = 'https://ezgantt.appspot.com/#1kYfoEFXW-psZ8AMy0Ne7wRMiM3umNKBs3v9U7nvafXA';
-      };
 
       let hash = location.hash.replace('#', '');
       if (hash) {
@@ -125,6 +127,11 @@ authAndLoadPromise(API_KEY, CLIENT_ID, ['drive', 'spreadsheets', 'gantt']).then(
     // End
     rowData.push(row.enddate ? new Date(row.enddate) : null);
 
+    if(row.startdate && row.enddate && (new Date(row.startdate))>(new Date(row.enddate))) {
+      alert('Illogical, start date later than end date for id:' + id);
+    }
+   
+    
     // Duration
     rowData.push(row.duration ? strToMS(row.duration) : null);
 

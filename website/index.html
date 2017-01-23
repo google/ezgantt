@@ -5,13 +5,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
 
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-  <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="//www.gstatic.com/external_hosted/material_design_lite/mdl_css-blue_grey-light_blue-bundle.css">
+  <script src="//www.gstatic.com/external_hosted/material_design_lite/mdl_all_js_compiled.js"></script>
 
-  <script src="https://pledgejs.appspot.com/js/pledge.js"></script>
-  <script src="js/ezgantt.js"></script>
-
+  <script>
+    // Because there is an internal version with slightly different naming.
+    // Would normally just <script src="//pledgejs.appspot.com/js/pledge.js">
+    const IS_PUBLIC = window.location.toString().includes('appspot');
+    let domain = location.hostname.split('.');
+    domain.shift();
+    domain.unshift(IS_PUBLIC ? 'pledgejs' : 'pledge');
+    
+    let pledgejs = document.createElement('script');
+    let src = 'https://' + domain.join('.') + '/js/pledge.js';
+    console.info(src);
+    pledgejs.setAttribute('src',src);
+    pledgejs.onload = function() {
+      let ezgantt = document.createElement('script');
+      ezgantt.setAttribute('src', '/js/ezgantt.js');
+      document.head.appendChild(ezgantt);    
+    };
+    document.head.appendChild(pledgejs);
+  </script>
+  
   <style>
     #chart_div {
       height: 8000px;
@@ -39,7 +56,7 @@
   </div>
 
   <dialog id="instructions-dialog">
-    <p>View <a target="_blank" href="https://ezgantt.appspot.com/#1kYfoEFXW-psZ8AMy0Ne7wRMiM3umNKBs3v9U7nvafXA">working demo and starter spreadsheet</a>.</p>
+    <p>View <a target="_blank" href="/#1kYfoEFXW-psZ8AMy0Ne7wRMiM3umNKBs3v9U7nvafXA">working demo and starter spreadsheet</a>.</p>
     <p>To make your own:</p>
     <ol>
       <li>Copy the <a target="_blank" href="https://docs.google.com/spreadsheets/d/1kYfoEFXW-psZ8AMy0Ne7wRMiM3umNKBs3v9U7nvafXA/edit#gid=0">spreadsheet</a>, be sure NOT to share it with me!</li>
@@ -52,9 +69,8 @@
       </li>
       <li>View your Gantt Chart with the "ezGantt" menu in the spreadsheet (or at https://ezgantt.appspot.com/<strong>#</strong>YOUR_SPREADSHEET_KEY <i>(where the key is https://docs.google.com/spreadsheets/d/<strong>[this part is the key]</strong>/edit -- Don't forget the "#" hash!)</i> </li>
     </ol>
-    <button id="close-instructions" class="mdl-button mdl-js-button mdl-js-ripple-effect">got it</button>
   </dialog>
-
+  
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

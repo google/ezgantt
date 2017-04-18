@@ -9,25 +9,9 @@
   <link rel="stylesheet" href="//www.gstatic.com/external_hosted/material_design_lite/mdl_css-blue_grey-light_blue-bundle.css">
   <script src="//www.gstatic.com/external_hosted/material_design_lite/mdl_all_js_compiled.js"></script>
 
-  <script>
-    // Because there is an internal version with slightly different naming.
-    // Would normally just <script src="//pledgejs.appspot.com/js/pledge.js">
-    const IS_PUBLIC = window.location.toString().includes('appspot');
-    let domain = location.hostname.split('.');
-    domain.shift();
-    domain.unshift(IS_PUBLIC ? 'pledgejs' : 'pledge');
-    
-    let pledgejs = document.createElement('script');
-    let src = 'https://' + domain.join('.') + '/js/pledge.js';
-    console.info(src);
-    pledgejs.setAttribute('src',src);
-    pledgejs.onload = function() {
-      let ezgantt = document.createElement('script');
-      ezgantt.setAttribute('src', '/js/ezgantt.js');
-      document.head.appendChild(ezgantt);    
-    };
-    document.head.appendChild(pledgejs);
-  </script>
+  <script src="js/auth.js"></script>
+  <script src="js/ezgantt.js"></script>
+  <script async src="https://apis.google.com/js/platform:auth2:client.js" onload="platformLoaded()"></script>
   
   <style>
     #chart_div {

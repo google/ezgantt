@@ -149,11 +149,11 @@ login(API_KEY, CLIENT_ID, APIS).then(() => {
     // Resource
     rowData.push(row.resource ? row.resource.toLowerCase().trim() : null);
 
-    // Start
-    rowData.push(row.startdate ? new Date(row.startdate) : null);
+    // Start (slash hack for local timezone)
+    rowData.push(row.startdate ? new Date(row.startdate.replace(/-/g, '/')) : null);
 
-    // End
-    rowData.push(row.enddate ? new Date(row.enddate) : null);
+    // End (slash hack for local timezone)
+    rowData.push(row.enddate ? new Date(row.enddate.replace(/-/g, '/')) : null);
 
     if (row.startdate && row.enddate && (new Date(row.startdate)) > (new Date(row.enddate))) {
       alert('Illogical, start date later than end date for id:' + id);

@@ -2,73 +2,32 @@
 /*jshint esversion: 6 */
 /*jshint unused:true */
 /*exported login */
-/** Smart injection of a URL into the head, assuming a normal js or css suffix */
-var injectHead = (url, type) => {
-  return new Promise((resolve, reject) => {
-    let s = document.getElementsByTagName('script')[0],
-      elt = null,
-      switcher = type || url.split('.').reverse()[0].toLowerCase();
 
-    switch (switcher) {
-    case 'js':
-    case 'script':
-      elt = document.createElement('script');
-      elt.type = 'text/javascript';
-      elt.src = url;
-      elt.onload = () => {
-        console.info('injectHead inserted:', url, switcher, type);
-        resolve();
-      };
-      s.parentNode.insertBefore(elt, s);
-      break;
-    case 'css':
-    case 'stylesheet':
-      elt = document.createElement('link');
-      elt.rel = 'stylesheet';
-      elt.href = url;
-      s.parentNode.insertBefore(elt, s);
-      console.info('injectHead inserted:', url, switcher, type);
-      resolve();
-      break;
-    default:
-      reject("Can't handle injectHead, try forcing the type:" + url + type);
-    }
-  });
-};
-
-/** google.charts.load as a promise */
-var loadCharts = chartTypes => Promise.resolve()
-  .then(() => injectHead('https://www.gstatic.com/charts/loader.js'))
-  .then(() => new Promise(resolve => {
-    google.charts.setOnLoadCallback(() => {
-      resolve('loadCharts:' + JSON.stringify(chartTypes));
-    });
-    google.charts.load('current', {
-      'packages': [].concat(chartTypes)
-    });
-  }));
-
-// In case platformLoaded gets called earlier than expected
-window.platformLoaded = () => {
-  console.info('platformLoaded before auth started (ignore)');
-};
 
 /** Core login logic */
-var login = (apiKey, clientId, apis) => new Promise(resolve => {
+var login = (apiKey, clientId, apis) => Promise.resolve().then(()=>{
   console.group();
   console.time('Auth');
   console.info('Auth:beginning.');
-  // <script async src="https://apis.google.com/js/platform:client.js" onload="platformLoaded()"></script>
-  window.platformLoaded = () => {
-    if (window.gapi) {
-      console.info('gapi exists');
-      resolve();
-    }
-  };
-  window.platformLoaded();
+  console.assert(window.gapi, `Missing window.gapi`);
 }).then(() => new Promise(resolve => {
-  console.info('loading client:auth2');
-  gapi.load('client:auth2', resolve);
+  gapi.load('client:auth2', resolve); // Promise not working :(
+})).then(() => new Promise(resolve => {
+  console.assert(gapi.client, `Missing gapi.client`);
+  console.assert(gapi.auth2, `Missing gapi.auth2`);
+  // Block on document being fully ready, in case we need to build a login button
+  if (document.readyState === 'complete') {
+    console.info(`document.readyState=${document.readyState}`);
+    resolve();
+    return;
+  }
+  let onReady = () => {
+    resolve();
+    document.removeEventListener('DOMContentLoaded', onReady, true);
+    window.removeEventListener('load', onReady, true);
+  };
+  document.addEventListener('DOMContentLoaded', onReady, true);
+  window.addEventListener('load', onReady, true);
 })).then(() => gapi.client.init({
   apiKey: apiKey,
   clientId: clientId,
@@ -78,7 +37,7 @@ var login = (apiKey, clientId, apis) => new Promise(resolve => {
   const SIGN_IN_ID = 'google-signin-button';
   let dialog = document.querySelector('#' + SIGN_IN_ID);
 
-  let signinCheck = (isSignedIn) => {
+  let signinCheck = isSignedIn => {
     console.info(`signinCheck(${isSignedIn})`);
     if (isSignedIn) {
       if (dialog) {
@@ -120,6 +79,8 @@ var login = (apiKey, clientId, apis) => new Promise(resolve => {
   let charts = apis.filter(api => api.chart).map(api => api.chart);
   if (charts.length > 0) {
     console.info('loading charts');
-    return loadCharts(charts);
+    return google.charts.load('current', {
+      'packages': [].concat(charts)
+    });
   }
 });

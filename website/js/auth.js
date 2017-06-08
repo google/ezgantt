@@ -3,18 +3,7 @@
 /*jshint unused:true */
 /*exported login */
 
-
-/** Core login logic */
-var login = (apiKey, clientId, apis) => Promise.resolve().then(()=>{
-  console.group();
-  console.time('Auth');
-  console.info('Auth:beginning.');
-  console.assert(window.gapi, `Missing window.gapi`);
-}).then(() => new Promise(resolve => {
-  gapi.load('client:auth2', resolve); // Promise not working :(
-})).then(() => new Promise(resolve => {
-  console.assert(gapi.client, `Missing gapi.client`);
-  console.assert(gapi.auth2, `Missing gapi.auth2`);
+var blockUntilDOMReady = new Promise(resolve => {
   // Block on document being fully ready, in case we need to build a login button
   if (document.readyState === 'complete') {
     console.info(`document.readyState=${document.readyState}`);
@@ -28,12 +17,45 @@ var login = (apiKey, clientId, apis) => Promise.resolve().then(()=>{
   };
   document.addEventListener('DOMContentLoaded', onReady, true);
   window.addEventListener('load', onReady, true);
-})).then(() => gapi.client.init({
+});
+
+
+
+/*
+Core login logic 
+Example: 
+<code> apis = [{
+    'gapi':'drive',
+    'discovery': 'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest',
+    'scopes': [
+      'https://www.googleapis.com/auth/drive.readonly',
+      'https://www.googleapis.com/auth/drive.metadata.readonly'
+    ]
+  },{
+    'chart':'gantt'
+  }]
+  </code>
+*/
+
+var login = (apiKey, clientId, apis) => Promise.resolve()
+.then(()=>{
+  console.assert(window.gapi, `Expected window.gapi, please load https://apis.google.com/js/auth2:client.js`);
+  console.group();
+  console.time('Auth');
+  console.info('Auth:beginning.');
+})
+.then(() => new Promise(resolve => {
+  // Promise not implemented in gapi.load
+  gapi.load('client:auth2:signin2', resolve); 
+}))
+.then(blockUntilDOMReady) // Must be before gapi.client.init because init needs an iframe
+.then(()=>gapi.client.init({
   apiKey: apiKey,
   clientId: clientId,
   discoveryDocs: apis.filter(api => api.discovery).map(api => api.discovery),
   scope: [...new Set(apis.filter(api => api.scopes).map(api => api.scopes.join(' ')))].join(' ')
-})).then(() => new Promise(resolve => {
+}))
+.then(() => new Promise(resolve => {
   const SIGN_IN_ID = 'google-signin-button';
   let dialog = document.querySelector('#' + SIGN_IN_ID);
 
@@ -70,12 +92,8 @@ var login = (apiKey, clientId, apis) => Promise.resolve().then(()=>{
     });
   }
   dialog.showModal();
-})).then(() => {
-  console.info('Fully authorized, beginning app');
-  console.timeEnd('Auth');
-  console.groupEnd();
-  //////////////// END AUTH ////////////////
-}).then(() => {
+}))
+.then(() => {
   let charts = apis.filter(api => api.chart).map(api => api.chart);
   if (charts.length > 0) {
     console.info('loading charts');
@@ -83,4 +101,9 @@ var login = (apiKey, clientId, apis) => Promise.resolve().then(()=>{
       'packages': [].concat(charts)
     });
   }
+})
+.then(() => {
+  console.info('Fully authorized and loaded libs, beginning app');
+  console.timeEnd('Auth');
+  console.groupEnd();
 });

@@ -32,8 +32,8 @@ To use it yourself, make a copy of the demo sheet and start adding tasks!
 
 # QUOTES
 
-    "I think ezgantt is a great tool for small-medium projects, 
-    it's easy to learn (took me minutes to get a good chart) and maintain."
+> "I think ezgantt is a great tool for small-medium projects, 
+> it's easy to learn (took me minutes to get a good chart) and maintain."
 
 # References
 

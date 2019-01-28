@@ -8,16 +8,16 @@ let daysToMilliseconds = days => {
   },
   strToMS = str => {
     switch (str.slice(-1)) {
-    case 'w':
-      return daysToMilliseconds(str) * 7;
-    case 'm':
-      return daysToMilliseconds(str) * 7 * 4;
-    case 'q':
-      return daysToMilliseconds(str) * 7 * 4 * 3;
-    case 'd':
+      case 'w':
+        return daysToMilliseconds(str) * 7;
+      case 'm':
+        return daysToMilliseconds(str) * 7 * 4;
+      case 'q':
+        return daysToMilliseconds(str) * 7 * 4 * 3;
+      case 'd':
       /* falls through */
-    default:
-      return daysToMilliseconds(str);
+      default:
+        return daysToMilliseconds(str);
     }
   };
 
@@ -30,15 +30,15 @@ const
     'gapi': 'spreadsheets',
     'discovery': 'https://sheets.googleapis.com/$discovery/rest?version=v4',
     'scopes': ['https://www.googleapis.com/auth/spreadsheets.readonly']
-  },{
-    'gapi':'drive',
+  }, {
+    'gapi': 'drive',
     'discovery': 'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest',
     'scopes': [
       'https://www.googleapis.com/auth/drive.readonly',
       'https://www.googleapis.com/auth/drive.metadata.readonly'
     ]
-  },{
-    'chart':'gantt'
+  }, {
+    'chart': 'gantt'
   }];
 
 if (!IS_PUBLIC) {
@@ -97,8 +97,8 @@ login(API_KEY, CLIENT_ID, APIS).then(() => {
       newRowHasData = false;
 
     for (let colNum = 0; rowData[rowNum] &&
-      rowData[rowNum].values &&
-      colNum < rowData[rowNum].values.length; colNum++) {
+    rowData[rowNum].values &&
+    colNum < rowData[rowNum].values.length; colNum++) {
       let headerName = rowData[0].values[colNum].formattedValue.toLowerCase().replace(/[^a-z0-9]/g, '').trim();
       if (rowData[rowNum].values[colNum] &&
         (typeof rowData[rowNum].values[colNum].formattedValue !== 'undefined')) {

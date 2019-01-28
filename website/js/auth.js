@@ -101,10 +101,10 @@ let login = (apiKey, clientId, apis) => {
     // blockUntilDOMReady must be before gapi.client.init because init needs an iframe
     .then(() => Promise.all([blockUntilDOMReady(), gapiLoad(), chartLoad(apis)]))
     .then(() => gapi.client.init({
-      apiKey: apiKey,
-      clientId: clientId,
-      discoveryDocs: apis.filter(api => api.discovery).map(api => api.discovery),
-      scope: [...new Set(apis.filter(api => api.scopes).map(api => api.scopes.join(' ')))].join(' ')
+      'apiKey': apiKey,
+      'clientId': clientId,
+      'discoveryDocs': apis.filter(api => api.discovery).map(api => api.discovery),
+      'scope': [...new Set(apis.filter(api => api.scopes).map(api => api.scopes.join(' ')))].join(' ')
     }))
     .then(signinDialog)
     .then(() => {

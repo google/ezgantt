@@ -14,13 +14,14 @@ To use it yourself, make a copy of the demo sheet and start adding tasks!
 - [ ] Allow both date and depends-on constraints, and choose latest one as a "no earlier than" constraint.
 - [ ] Last updated date (and who?)
 - [x] Public ezgantt.appspot.com version
-- [x] Any line item task descripton where the task starts with a '#' is ignored
+- [x] Any line item task description where the task starts with a '#' is ignored
 - [x] Drive API v3, Sheets API v4
 - [x] Enforce unique ID column
 - [x] Easier linking from sheet to chart
 - [x] Resources in demo = people
 - [x] Easier hash tag
 - [x] new better auth, fetch, promises flow
+- [x] removed excess drive permissions
 
 # INFO
 

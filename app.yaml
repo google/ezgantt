@@ -4,6 +4,9 @@ runtime: python27
 api_version: 1
 threadsafe: true
 
+# debugging mode
+# default_expiration: "1s"
+
 skip_files:
   - ^(.*/)?#.*#$
   - ^(.*/)?.*~$

@@ -1,7 +1,7 @@
-/*globals SpreadsheetApp */
+/*globals SpreadsheetApp, HtmlService */
 /*jshint esversion: 8 */
 /*jshint unused:true */
-/*exported linkToGantt */
+/*exported linkToGantt, onOpen */
 
 /**
  * @OnlyCurrentDoc
@@ -17,8 +17,20 @@ function onOpen() {
 
 function linkToGantt() {
     const id = SpreadsheetApp.getActiveSpreadsheet().getId();
-    const sortTasks = true; // by default use the topological sort, not sheet sorting
-    const htmlString = `<a href="https://ezgantt.googleplex.com/?sortBool=${sortTasks}#${id}" target="_blank">Open Gantt View</a>`;
+
+    const params = {
+        // true=use the Gantt chart sort, false=keep the spreadsheet's ordering.  Optional, default=true.
+        // 'sortTasks': /** @type {boolean} */ false
+    };
+
+    let queryString = '';
+    if (params.entries().length > 0) {
+        queryString += '?' + Object.keys(params).map((key) => {
+            return encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
+        }).join('&');
+    }
+
+    const htmlString = `<a href="https://ezgantt.googleplex.com/${queryString}#${id}" target="_blank">Open Gantt View</a>`;
 
     const htmlOutput = HtmlService
         .createHtmlOutput(htmlString)

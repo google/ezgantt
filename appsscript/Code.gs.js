@@ -24,9 +24,10 @@ function linkToGantt() {
     };
 
     let queryString = '';
-    if (params.entries().length > 0) {
+
+    if (Object.entries(params).length > 0) {
         queryString += '?' + Object.keys(params).map((key) => {
-            return encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
+            return encodeURIComponent(key) + '=' + encodeURIComponent(params[key])
         }).join('&');
     }
 

@@ -75,6 +75,8 @@ async function main() {
   await auth.login(API_KEY, CLIENT_ID, APIS);
 
   const sheetId = location.hash.replace('#', '').replace(/[?&].*/, '');
+  const urlParams = new URLSearchParams(window.location.search);
+  const sortBool = urlParams.get("sortBool") == "true";
   if (sheetId) {
     document.getElementById('sheet').setAttribute('href', `https://docs.google.com/spreadsheets/d/${sheetId}/edit`);
   } else {
@@ -185,7 +187,9 @@ async function main() {
       criticalPathStyle: {
         stroke: '#e64a19',
         strokeWidth: 5
-      }
+      },
+	  // configure the sorting behavior as per https://developers.google.com/chart/interactive/docs/gallery/ganttchart
+	  sortTasks = sortBool,
     }
   };
 

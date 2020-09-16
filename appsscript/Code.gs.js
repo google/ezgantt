@@ -17,7 +17,8 @@ function onOpen() {
 
 function linkToGantt() {
     const id = SpreadsheetApp.getActiveSpreadsheet().getId();
-    const htmlString = `<a href="https://ezgantt.googleplex.com/#${id}" target="_blank">Open Gantt View</a>`;
+    const sortTasks = true; // by default use the topological sort, not sheet sorting
+    const htmlString = `<a href="https://ezgantt.googleplex.com/?sortBool=${sortTasks}#${id}" target="_blank">Open Gantt View</a>`;
 
     const htmlOutput = HtmlService
         .createHtmlOutput(htmlString)

@@ -107,6 +107,7 @@ async function main() {
     let spreadsheet = resp.result;
     console.info('spreadsheet', spreadsheet);
     document.getElementById('pageTitle').innerHTML = spreadsheet.properties.title;
+    document.title = spreadsheet.properties.title;
     // console.log('Found ' + spreadsheet.sheets.length + ' worksheets.');
 
     const sheet = spreadsheet.sheets.find(sheet => sheet.properties.title.toLowerCase().includes('gantt'));

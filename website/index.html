@@ -29,10 +29,38 @@
   <script type="module" src="js/ezgantt.js"></script>
 
   <style>
+    body {
+      height: 500vh;
+      margin: 0;
+      overflow: auto;
+    }
     #chart_div {
       height: 8000px;
       width: 100%;
       background-color: #efe;
+    }
+    .cursor {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .vl {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: rgba(0, 0, 0, 0.3);
+    }
+    .hl {
+      position: absolute;
+      height: 1px;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.3);
     }
   </style>
   <title>Easy Gantt Chart (ezGantt)</title>
@@ -50,6 +78,10 @@
   <main class="mdl-layout__content">
     <div class="page-content">
       <div id="chart_div"></div>
+      <div class="cursor">
+        <div class="vl"></div>
+        <div class="hl"></div>
+      </div>
     </div>
   </main>
 </div>

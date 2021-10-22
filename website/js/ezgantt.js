@@ -215,4 +215,11 @@ main().then(() => {
     alert(`App error: ${err}`);
 });
 
+// Add cursor lines
+const cursorVL = document.querySelector('.vl')
+const cursorHL = document.querySelector('.hl')
 
+document.addEventListener('mousemove', e => {
+    cursorVL.setAttribute('style', `left: ${e.clientX}px;`)
+    cursorHL.setAttribute('style', `top: ${e.clientY}px;`)
+})

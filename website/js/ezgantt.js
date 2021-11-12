@@ -66,6 +66,7 @@ function sheetToObject(sheet) {
 
 async function main() {
     if (!IS_PUBLIC) {
+        window.alert('Internal ezgantt is shutting down.  Please choose a similar tool from p/ezgantt')
         let anchors = document.getElementsByTagName("a");
         for (let i = 0; i < anchors.length; i++) {
             anchors[i].href = anchors[i].href.replace(PUBLIC_PRIVATE_DOC[0], PUBLIC_PRIVATE_DOC[1]);

@@ -108,6 +108,7 @@ async function main() {
     let spreadsheet = resp.result;
     console.info('spreadsheet', spreadsheet);
     document.getElementById('pageTitle').innerHTML = spreadsheet.properties.title;
+    document.title = spreadsheet.properties.title;
     // console.log('Found ' + spreadsheet.sheets.length + ' worksheets.');
 
     const sheet = spreadsheet.sheets.find(sheet => sheet.properties.title.toLowerCase().includes('gantt'));
@@ -215,4 +216,11 @@ main().then(() => {
     alert(`App error: ${err}`);
 });
 
+// Add cursor lines
+const cursorVL = document.querySelector('.vl')
+const cursorHL = document.querySelector('.hl')
 
+document.addEventListener('mousemove', e => {
+    cursorVL.setAttribute('style', `left: ${e.clientX}px;`)
+    cursorHL.setAttribute('style', `top: ${e.clientY}px;`)
+})
